@@ -52,7 +52,12 @@ group :test do
 end
 
 group :production do
-  #gem 'pg', '1.2.3'
+  begin
+    require 'minitest/autorun'
+  rescue LoadError => e
+    raise e unless ENV['RAILS_ENV'] == "production"
+  end
+  gem 'pg', '1.2.3'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
